@@ -32,6 +32,13 @@ main:
 	LDI R16, 90
 	STS current_pos, R16
 
+	SER R16
+	OUT PORTB, R16
+	CALL delay_1_5ms
+	CLR R16
+	OUT PORTB, R16
+	CALL delay_19ms
+
 	loop:
 		LDS R17, trigger
 
@@ -243,3 +250,24 @@ repeticiones:
 	POP YL															;Restauración del registro YL
 	POP YH															;Restauración del registro YH
 	RET																;RET es el equivalente al return, antes deberemos de haber guardado el PC (Program Counter)	
+
+delay_1_5ms:
+	PUSH R18
+	PUSH R19
+	; Assembly code auto-generated
+	; by utility from Bret Mulvey
+	; Delay 24 000 cycles
+	; 1ms 500us at 16 MHz
+
+		ldi  r18, 32
+		ldi  r19, 42
+	L4: 
+		dec  r19
+		brne L4
+		dec  r18
+		brne L4
+		nop
+
+	POP R19
+	POP R18
+	RET

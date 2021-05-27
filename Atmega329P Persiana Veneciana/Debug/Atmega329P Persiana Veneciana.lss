@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm Thu May 27 13:33:17 2021
+AVRASM ver. 2.2.8  c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm Thu May 27 13:39:01 2021
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
@@ -992,7 +992,7 @@ AVRASM ver. 2.2.8  c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana 
 000000 940c 0072                 	JMP main															
                                  		
                                  .ORG 0X0032																		;Posicion de memoria donde se encuentran las interrupciones serial
-000032 940c 00d2                 	JMP USART0_reception_completed												;Saltamos a la funcion cuando se genere la interrupcion
+000032 940c 00da                 	JMP USART0_reception_completed												;Saltamos a la funcion cuando se genere la interrupcion
                                  //	JMP USART0_transmit_buffer_empty											;Saltamos a la funcion cuando se genere la interrupcion
                                  //	JMP USART0_byte_transmitted													;Saltamos a la funcion cuando se genere la interrupcion
                                  
@@ -1012,96 +1012,103 @@ AVRASM ver. 2.2.8  c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana 
 000076 ef0f                      	LDI R16, LOW(RAMEND)
 000077 bf0d                      	OUT SPL, R16
                                  
-000078 d04a                      	RCALL init_USART0															;Llamamos a la funcion para configurar USART
+000078 d052                      	RCALL init_USART0															;Llamamos a la funcion para configurar USART
 000079 9478                      	SEI																			;Activamos el uso de interrupciones
                                  	
 00007a e50a                      	LDI R16, 90
 00007b 9300 0101                 	STS current_pos, R16
                                  
+00007d ef0f                      	SER R16
+00007e b905                      	OUT PORTB, R16
+00007f 940e 0112                 	CALL delay_1_5ms
+000081 2700                      	CLR R16
+000082 b905                      	OUT PORTB, R16
+000083 940e 00e5                 	CALL delay_19ms
+                                 
                                  	loop:
-00007d 9110 0100                 		LDS R17, trigger
+000085 9110 0100                 		LDS R17, trigger
                                  
-00007f 3611                      		CPI R17, 97
-000080 f019                      		BREQ abrir
+000087 3611                      		CPI R17, 97
+000088 f019                      		BREQ abrir
                                  
-000081 3613                      		CPI R17, 99
-000082 f0c1                      		BREQ cerrar
+000089 3613                      		CPI R17, 99
+00008a f0c1                      		BREQ cerrar
                                  
-000083 c03e                      		RJMP seguir
+00008b c03e                      		RJMP seguir
                                  
                                  		abrir:
-000084 9120 0101                 			LDS R18, current_pos
-000086 9523                      			INC R18
-000087 3b24                      			CPI R18, 180
-000088 f149                      			BREQ set_180
-000089 9320 0101                 			STS current_pos, R18
+00008c 9120 0101                 			LDS R18, current_pos
+00008e 9523                      			INC R18
+00008f 3b24                      			CPI R18, 180
+000090 f149                      			BREQ set_180
+000091 9320 0101                 			STS current_pos, R18
                                  
-00008b ef1f                      			SER R17
-00008c b915                      			OUT PORTB, R17
-                                 
-00008d 932f                      			PUSH R18
-00008e 940e 00f8                 			CALL delay_0_01ms
-000090 912f                      			POP R18
-                                 
-000091 940e 00ed                 			CALL delay_0_5ms
-                                 
-000093 2711                      			CLR R17
+000093 ef1f                      			SER R17
 000094 b915                      			OUT PORTB, R17
-000095 940e 00dd                 			CALL delay_19ms
                                  
-000097 2711                      			CLR R17
-000098 9310 0100                 			STS trigger, R17
+000095 932f                      			PUSH R18
+000096 940e 0100                 			CALL delay_0_01ms
+000098 912f                      			POP R18
                                  
-00009a c027                      			RJMP seguir
+000099 940e 00f5                 			CALL delay_0_5ms
+                                 
+00009b 2711                      			CLR R17
+00009c b915                      			OUT PORTB, R17
+00009d 940e 00e5                 			CALL delay_19ms
+                                 
+00009f 2711                      			CLR R17
+0000a0 9310 0100                 			STS trigger, R17
+                                 
+0000a2 c027                      			RJMP seguir
                                  
                                  		cerrar:
-00009b 9120 0101                 			LDS R18, current_pos
-00009d 952a                      			DEC R18
-00009e 3020                      			CPI R18, 0
-00009f f0d1                      			BREQ set_0
-0000a0 9320 0101                 			STS current_pos, R18
+0000a3 9120 0101                 			LDS R18, current_pos
+0000a5 952a                      			DEC R18
+0000a6 3020                      			CPI R18, 0
+0000a7 f0d1                      			BREQ set_0
+0000a8 9320 0101                 			STS current_pos, R18
                                  
-0000a2 ef1f                      			SER R17
-0000a3 b915                      			OUT PORTB, R17
-                                 
-0000a4 932f                      			PUSH R18
-0000a5 940e 00f8                 			CALL delay_0_01ms
-0000a7 912f                      			POP R18
-                                 
-0000a8 940e 00ed                 			CALL delay_0_5ms
-                                 
-0000aa 2711                      			CLR R17
+0000aa ef1f                      			SER R17
 0000ab b915                      			OUT PORTB, R17
-0000ac 940e 00dd                 			CALL delay_19ms
                                  
-0000ae 2711                      			CLR R17
-0000af 9310 0100                 			STS trigger, R17
+0000ac 932f                      			PUSH R18
+0000ad 940e 0100                 			CALL delay_0_01ms
+0000af 912f                      			POP R18
                                  
-0000b1 c010                      			RJMP seguir
+0000b0 940e 00f5                 			CALL delay_0_5ms
+                                 
+0000b2 2711                      			CLR R17
+0000b3 b915                      			OUT PORTB, R17
+0000b4 940e 00e5                 			CALL delay_19ms
+                                 
+0000b6 2711                      			CLR R17
+0000b7 9310 0100                 			STS trigger, R17
+                                 
+0000b9 c010                      			RJMP seguir
                                  	
                                  		set_180:
-0000b2 9120 0101                 			LDS R18, current_pos
-                                 
-0000b4 3b24                      			CPI R18, 180
-0000b5 f461                      			BRNE seguir
-                                 
-0000b6 eb24                      			LDI R18, 180
-0000b7 9320 0101                 			STS current_pos, R18
-                                 
-0000b9 c008                      			RJMP seguir
-                                 
-                                 		set_0:
 0000ba 9120 0101                 			LDS R18, current_pos
-0000bc 3020                      			CPI R18, 0
-0000bd f421                      			BRNE seguir
                                  
-0000be e020                      			LDI R18, 0
+0000bc 3b24                      			CPI R18, 180
+0000bd f461                      			BRNE seguir
+                                 
+0000be eb24                      			LDI R18, 180
 0000bf 9320 0101                 			STS current_pos, R18
                                  
-0000c1 c000                      			RJMP seguir
+0000c1 c008                      			RJMP seguir
+                                 
+                                 		set_0:
+0000c2 9120 0101                 			LDS R18, current_pos
+0000c4 3020                      			CPI R18, 0
+0000c5 f421                      			BRNE seguir
+                                 
+0000c6 e020                      			LDI R18, 0
+0000c7 9320 0101                 			STS current_pos, R18
+                                 
+0000c9 c000                      			RJMP seguir
                                  		
                                  		seguir:
-0000c2 cfba                      			RJMP loop															;Saltamos a la etiqueta loop
+0000ca cfba                      			RJMP loop															;Saltamos a la etiqueta loop
                                  
                                  /***************************************************
                                  
@@ -1110,37 +1117,37 @@ AVRASM ver. 2.2.8  c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana 
                                  ***************************************************/
                                  
                                  init_USART0:																	;Funcion para cargar el valor de UBRR
-0000c3 930f                      	PUSH R16
-0000c4 e607                      	LDI R16, LOW(UBRRvalue)														;Cogemos el valor bajo de la variable UBRRvalue
-0000c5 9300 00c4                 	STS UBRR0L, R16																;Cargamos el valor del byte bajo
-0000c7 e000                      	LDI R16, HIGH(UBRRvalue)													;Cogemos el valor alto de la variable UBRRvalue
-0000c8 9300 00c5                 	STS UBRR0H, R16																;Cargamos el valor del byte alto
+0000cb 930f                      	PUSH R16
+0000cc e607                      	LDI R16, LOW(UBRRvalue)														;Cogemos el valor bajo de la variable UBRRvalue
+0000cd 9300 00c4                 	STS UBRR0L, R16																;Cargamos el valor del byte bajo
+0000cf e000                      	LDI R16, HIGH(UBRRvalue)													;Cogemos el valor alto de la variable UBRRvalue
+0000d0 9300 00c5                 	STS UBRR0H, R16																;Cargamos el valor del byte alto
                                  
                                  	//Activamos la recepcion y transmision de datos
-0000ca e900                      	LDI R16, (1 << RXEN0)|(0 << TXEN0)|(0 << UDRIE0)|(0 << TXCIE0)|(1 << RXCIE0)
-0000cb 9300 00c1                 	STS UCSR0B, R16																;Asignamos al registro UCSR0B los bits establecidos
-0000cd e006                      	LDI R16, (0 << UMSEL00)|(1 << UCSZ01)|(1 << UCSZ00)|(0 << USBS0)|(0 << UPM01)|(0 << UPM00)
-0000ce 9300 00c2                 	STS UCSR0C, R16																;Asignamos al registro UCSR0C los bits establecidos				
-0000d0 910f                      	POP R16
+0000d2 e900                      	LDI R16, (1 << RXEN0)|(0 << TXEN0)|(0 << UDRIE0)|(0 << TXCIE0)|(1 << RXCIE0)
+0000d3 9300 00c1                 	STS UCSR0B, R16																;Asignamos al registro UCSR0B los bits establecidos
+0000d5 e006                      	LDI R16, (0 << UMSEL00)|(1 << UCSZ01)|(1 << UCSZ00)|(0 << USBS0)|(0 << UPM01)|(0 << UPM00)
+0000d6 9300 00c2                 	STS UCSR0C, R16																;Asignamos al registro UCSR0C los bits establecidos				
+0000d8 910f                      	POP R16
                                  
-0000d1 9508                      	RET
+0000d9 9508                      	RET
                                  
                                  //Función de atención a la interrupcion
                                  USART0_reception_completed:
-0000d2 930f                      	PUSH R16
-0000d3 b70f                      	IN R16, SREG																;Hacemos una copia del registro SREG OBLIGATORIO si se usan interrupciones
-0000d4 930f                      	PUSH R16
+0000da 930f                      	PUSH R16
+0000db b70f                      	IN R16, SREG																;Hacemos una copia del registro SREG OBLIGATORIO si se usan interrupciones
+0000dc 930f                      	PUSH R16
                                  	
-0000d5 9100 00c6                 	LDS R16, UDR0																;Cogemos el byte recivido y hacemos algo con el
+0000dd 9100 00c6                 	LDS R16, UDR0																;Cogemos el byte recivido y hacemos algo con el
                                  
                                  	//Procesamos el dato
-0000d7 9300 0100                 	STS trigger, R16
+0000df 9300 0100                 	STS trigger, R16
                                  
                                  	//Finalizamos la interrupcion
-0000d9 910f                      	POP R16
-0000da bf0f                      	OUT SREG, R16																;Restablecemos el registro SREG
-0000db 910f                      	POP R16
-0000dc 9518                      	RETI																		;RETI equivale a RET pero utilizado en interrupciones
+0000e1 910f                      	POP R16
+0000e2 bf0f                      	OUT SREG, R16																;Restablecemos el registro SREG
+0000e3 910f                      	POP R16
+0000e4 9518                      	RETI																		;RETI equivale a RET pero utilizado en interrupciones
                                  
                                  /***************************************************
                                  
@@ -1148,65 +1155,65 @@ AVRASM ver. 2.2.8  c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana 
                                  
                                  ***************************************************/
                                  delay_19ms:
-0000dd 932f                      	PUSH R18											;Copia de seguridad del R18
-0000de 933f                      	PUSH R19											;Copia de seguridad del R19
-0000df 934f                      	PUSH R20											;Copia de seguridad del R20
+0000e5 932f                      	PUSH R18											;Copia de seguridad del R18
+0000e6 933f                      	PUSH R19											;Copia de seguridad del R19
+0000e7 934f                      	PUSH R20											;Copia de seguridad del R20
                                  
                                  	; Assembly code auto-generated
                                  	; by utility from Bret Mulvey
                                  	; Delay 304 000 cycles
                                  	; 19ms at 16 MHz
                                  
-0000e0 e022                      	ldi  r18, 2
-0000e1 e83b                      	ldi  r19, 139
-0000e2 ec4c                      	ldi  r20, 204
+0000e8 e022                      	ldi  r18, 2
+0000e9 e83b                      	ldi  r19, 139
+0000ea ec4c                      	ldi  r20, 204
                                  	L1: 
-0000e3 954a                      		dec  r20
-0000e4 f7f1                      		brne L1
-0000e5 953a                      		dec  r19
-0000e6 f7e1                      		brne L1
-0000e7 952a                      		dec  r18
-0000e8 f7d1                      		brne L1
+0000eb 954a                      		dec  r20
+0000ec f7f1                      		brne L1
+0000ed 953a                      		dec  r19
+0000ee f7e1                      		brne L1
+0000ef 952a                      		dec  r18
+0000f0 f7d1                      		brne L1
                                  		
-0000e9 914f                      	POP R20												;Reestablecemos el valor de R20
-0000ea 913f                      	POP R19												;Reestablecemos el valor de R19
-0000eb 912f                      	POP R18												;Reestablecemos el valor de R18
-0000ec 9508                      	RET	
+0000f1 914f                      	POP R20												;Reestablecemos el valor de R20
+0000f2 913f                      	POP R19												;Reestablecemos el valor de R19
+0000f3 912f                      	POP R18												;Reestablecemos el valor de R18
+0000f4 9508                      	RET	
                                  
                                  delay_0_5ms:
-0000ed 932f                      	PUSH R18
-0000ee 933f                      	PUSH R19
+0000f5 932f                      	PUSH R18
+0000f6 933f                      	PUSH R19
                                  
                                  	; Assembly code auto-generated
                                  	; by utility from Bret Mulvey
                                  	; Delay 8 000 cycles
                                  	; 500us at 16 MHz
                                  
-0000ef e02b                      		ldi  r18, 11
-0000f0 e633                      		ldi  r19, 99
+0000f7 e02b                      		ldi  r18, 11
+0000f8 e633                      		ldi  r19, 99
                                  	L2: 
-0000f1 953a                      		dec  r19
-0000f2 f7f1                      		brne L2
-0000f3 952a                      		dec  r18
-0000f4 f7e1                      		brne L2
+0000f9 953a                      		dec  r19
+0000fa f7f1                      		brne L2
+0000fb 952a                      		dec  r18
+0000fc f7e1                      		brne L2
                                  
-0000f5 913f                      	POP R19
-0000f6 912f                      	POP R18
+0000fd 913f                      	POP R19
+0000fe 912f                      	POP R18
                                  
-0000f7 9508                      	RET
+0000ff 9508                      	RET
                                  
                                  delay_0_01ms:
                                  	
-0000f8 93df                      	PUSH YH															;Copia de seguridad del registro YH
-0000f9 93cf                      	PUSH YL															;Copia de seguridad del registro YL
-0000fa b7cd                      	IN YL, SPL														
-0000fb b7de                      	IN YH, SPH														
-0000fc 920f                      	PUSH R0															;Copia de seguridad del registro R0
+000100 93df                      	PUSH YH															;Copia de seguridad del registro YH
+000101 93cf                      	PUSH YL															;Copia de seguridad del registro YL
+000102 b7cd                      	IN YL, SPL														
+000103 b7de                      	IN YH, SPH														
+000104 920f                      	PUSH R0															;Copia de seguridad del registro R0
                                  	
                                  
-0000fd 932f                      	PUSH R18														;Copia de seguridad del registro 18													;Copia de seguridad del registro 22
+000105 932f                      	PUSH R18														;Copia de seguridad del registro 18													;Copia de seguridad del registro 22
                                  	
-0000fe 800d                      	LDD R0, Y + 5													;Guardamos en el R0 el valor que haya en la pila desde Y + 5
+000106 800d                      	LDD R0, Y + 5													;Guardamos en el R0 el valor que haya en la pila desde Y + 5
                                  
                                  repeticiones:
                                  		; Assembly code auto-generated
@@ -1214,20 +1221,42 @@ AVRASM ver. 2.2.8  c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana 
                                  		; Delay 160 cycles
                                  		; 10us at 16 MHz
                                  
-0000ff e325                      			ldi  r18, 53
+000107 e325                      			ldi  r18, 53
                                  		L3: 
-000100 952a                      			dec  r18
-000101 f7f1                      			brne L3
-000102 0000                      			nop
+000108 952a                      			dec  r18
+000109 f7f1                      			brne L3
+00010a 0000                      			nop
                                  	
-000103 940a                      	DEC R0															;Decrementamos R0
-000104 f7d1                      	BRNE repeticiones												;Si no es cero vamos a repeticiones
+00010b 940a                      	DEC R0															;Decrementamos R0
+00010c f7d1                      	BRNE repeticiones												;Si no es cero vamos a repeticiones
                                  
                                  	
-000105 912f                      	POP R18															;Restauración del registro 20
-000106 900f                      	POP R0															;Restauración del registro 0
-000107 91cf                      	POP YL															;Restauración del registro YL
-000108 91df                      	POP YH															;Restauración del registro YH
+00010d 912f                      	POP R18															;Restauración del registro 20
+00010e 900f                      	POP R0															;Restauración del registro 0
+00010f 91cf                      	POP YL															;Restauración del registro YL
+000110 91df                      	POP YH															;Restauración del registro YH
+000111 9508                      	RET																;RET es el equivalente al return, antes deberemos de haber guardado el PC (Program Counter)	
+                                 
+                                 delay_1_5ms:
+000112 932f                      	PUSH R18
+000113 933f                      	PUSH R19
+                                 	; Assembly code auto-generated
+                                 	; by utility from Bret Mulvey
+                                 	; Delay 24 000 cycles
+                                 	; 1ms 500us at 16 MHz
+                                 
+000114 e220                      		ldi  r18, 32
+000115 e23a                      		ldi  r19, 42
+                                 	L4: 
+000116 953a                      		dec  r19
+000117 f7f1                      		brne L4
+000118 952a                      		dec  r18
+000119 f7e1                      		brne L4
+00011a 0000                      		nop
+                                 
+00011b 913f                      	POP R19
+00011c 912f                      	POP R18
+00011d 9508                      	RET
 
 
 RESOURCE USE INFORMATION
@@ -1247,7 +1276,7 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   1 z  :   0 r0 :   4 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  26 r17:  15 r18:  32 r19:   8 r20:   4 
+r13:   0 r14:   0 r15:   0 r16:  30 r17:  15 r18:  36 r19:  12 r20:   4 
 r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   3 
 r29:   3 r30:   0 r31:   0 
 Registers used: 9 out of 35 (25.7%)
@@ -1257,19 +1286,19 @@ Registers used: 9 out of 35 (25.7%)
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   4 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   9 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   6 cbi   :   0 cbr   :   0 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   4 cls   :   0 
+brne  :  11 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   8 cbi   :   0 cbr   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   5 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   6 cpse  :   0 dec   :   8 eor   :   0 fmul  :   0 fmuls :   0 
+cpi   :   6 cpse  :   0 dec   :  10 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   3 inc   :   1 jmp   :   2 
-ld    :   0 ldd   :   1 ldi   :  15 lds   :   6 lpm   :   0 lsl   :   0 
+ld    :   0 ldd   :   1 ldi   :  17 lds   :   6 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   1 or    :   0 ori   :   0 out   :   8 pop   :  14 
-push  :  14 rcall :   1 ret   :   4 reti  :   1 rjmp  :   6 rol   :   0 
+neg   :   0 nop   :   2 or    :   0 ori   :   0 out   :  10 pop   :  16 
+push  :  16 rcall :   1 ret   :   5 reti  :   1 rjmp  :   6 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
-sei   :   1 sen   :   0 ser   :   3 ses   :   0 set   :   0 sev   :   0 
+sei   :   1 sen   :   0 ser   :   4 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :  12 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
 Instructions used: 23 out of 113 (20.4%)
@@ -1277,7 +1306,7 @@ Instructions used: 23 out of 113 (20.4%)
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000214    312      0    312   32768   1.0%
+[.cseg] 0x000000 0x00023c    352      0    352   32768   1.1%
 [.dseg] 0x000100 0x000102      0      2      2    2048   0.1%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

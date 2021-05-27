@@ -23,22 +23,24 @@
  </OUTPUT_FILES>
  <LABELS>
   <main><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>20</LINE></main>
-  <USART0_reception_completed><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>143</LINE></USART0_reception_completed>
+  <USART0_reception_completed><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>150</LINE></USART0_reception_completed>
   <trigger><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>16</LINE></trigger>
   <current_pos><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>17</LINE></current_pos>
-  <init_USART0><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>126</LINE></init_USART0>
-  <loop><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>35</LINE></loop>
-  <abrir><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>46</LINE></abrir>
-  <cerrar><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>71</LINE></cerrar>
-  <seguir><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>117</LINE></seguir>
-  <set_180><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>96</LINE></set_180>
-  <delay_0_01ms><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>212</LINE></delay_0_01ms>
-  <delay_0_5ms><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>190</LINE></delay_0_5ms>
-  <delay_19ms><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>164</LINE></delay_19ms>
-  <set_0><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>107</LINE></set_0>
-  <L1><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>177</LINE></L1>
-  <L2><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>201</LINE></L2>
-  <repeticiones><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>225</LINE></repeticiones>
-  <L3><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>232</LINE></L3>
+  <init_USART0><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>133</LINE></init_USART0>
+  <delay_1_5ms><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>254</LINE></delay_1_5ms>
+  <delay_19ms><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>171</LINE></delay_19ms>
+  <loop><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>42</LINE></loop>
+  <abrir><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>53</LINE></abrir>
+  <cerrar><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>78</LINE></cerrar>
+  <seguir><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>124</LINE></seguir>
+  <set_180><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>103</LINE></set_180>
+  <delay_0_01ms><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>219</LINE></delay_0_01ms>
+  <delay_0_5ms><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>197</LINE></delay_0_5ms>
+  <set_0><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>114</LINE></set_0>
+  <L1><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>184</LINE></L1>
+  <L2><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>208</LINE></L2>
+  <repeticiones><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>232</LINE></repeticiones>
+  <L3><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>239</LINE></L3>
+  <L4><FILE>c:\users\javi\Documents\Atmel Studio\7.0\Atmega329P Persiana Veneciana\Atmega329P Persiana Veneciana\main.asm</FILE><LINE>264</LINE></L4>
  </LABELS>
 </ASSEMBLER_INFO>
