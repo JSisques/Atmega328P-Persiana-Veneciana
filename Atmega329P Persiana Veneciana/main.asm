@@ -18,8 +18,8 @@
 
 .cseg
 main:
-	SER R16
-	OUT DDRB, R16
+	SER R16																		;Ponemos a 255 el R16
+	OUT DDRB, R16																;Activamos el puerto B como salida
 
 	LDI R16, HIGH(RAMEND)														;Inicializamos la pila OBLIGATORIO si usamos interrupciones
 	OUT SPH, R16
@@ -29,97 +29,98 @@ main:
 	RCALL init_USART0															;Llamamos a la funcion para configurar USART
 	SEI																			;Activamos el uso de interrupciones
 	
-	LDI R16, 90
-	STS current_pos, R16
+	LDI R16, 90																	;Cargamos el valor 90 en R16
+	STS current_pos, R16														;Guardamos en la variable R16 (posicion inicial del servo)
 
-	SER R16
-	OUT PORTB, R16
-	CALL delay_1_5ms
-	CLR R16
-	OUT PORTB, R16
-	CALL delay_19ms
+	SER R16																		;Ponemos el valor 255 en R16
+	OUT PORTB, R16																;Sacamos por el puerto B el valor de R16 (encendido)
+	CALL delay_1_5ms															;Llamamos al delay de 1,5ms
+	CLR R16																		;Ponemos el valor 0 en R16
+	OUT PORTB, R16																;Sacamos por el puerto B el valor de R16 (apagado)
+	CALL delay_19ms																;Llamamos al delay de 19ms
 
 	loop:
-		LDS R17, trigger
+		LDS R17, trigger														;Cargamos en R17 el valor de la variable trigger
 
-		CPI R17, 97
-		BREQ abrir
+		CPI R17, 97																;Comparamos el R17 con el valor 97 (ASCII a)
+		BREQ abrir																;Si es igual lo anterior vamos a abrir
 
-		CPI R17, 99
-		BREQ cerrar
+		CPI R17, 99																;Comparamos el R17 con el valor 99 (ASCII c)
+		BREQ cerrar																;Si es igual lo anterior vamos a cerrar
 
-		RJMP seguir
+		RJMP seguir																;Saltamos a la etiqueta seguir
 
 		abrir:
-			LDS R18, current_pos
-			INC R18
-			CPI R18, 180
-			BREQ set_180
-			STS current_pos, R18
+			LDS R18, current_pos												;Cargamos el valor de la variable en R18
+			INC R18																;Incrementamos R18
+			CPI R18, 180														;Comparamos R18 con el valor 180
+			BREQ set_180														;Si lo anterior es igual saltamos a set_180
+			STS current_pos, R18												;Guardamos el valor de R18 en la variable current_pos
 
-			SER R17
-			OUT PORTB, R17
+			SER R17																;Ponemos a 255 R17
+			OUT PORTB, R17														;Sacamos el valor de R17 por el puerto B (encendido)
 
-			PUSH R18
-			CALL delay_0_01ms
-			POP R18
+			PUSH R18															;Guardamos el registro R18 en la pila
+			CALL delay_0_01ms													;Llamamos al delay de 0,01ms
+			POP R18																;Recuperamos el valor de la pila y lo guardamos en R18
 
-			CALL delay_0_5ms
+			CALL delay_0_5ms													;Llamamos al delay de 0,5ms
 
-			CLR R17
-			OUT PORTB, R17
-			CALL delay_19ms
+			CLR R17																;Ponemos el valor 0 a R17
+			OUT PORTB, R17														;Sacamos el valor de R17 por el puerto B (apagado)
+			CALL delay_19ms														;Llamamos al delay de 19ms
 
-			CLR R17
-			STS trigger, R17
+			CLR R17																;Ponemos a 0 R17
+			STS trigger, R17													;Guardamos R17 en la variable trigger
 
-			RJMP seguir
+			RJMP seguir															;Saltamos a seguir
 
 		cerrar:
-			LDS R18, current_pos
-			DEC R18
-			CPI R18, 0
-			BREQ set_0
-			STS current_pos, R18
+			LDS R18, current_pos												;Cargamos el valor de la variable en R18
+			DEC R18																;Incrementamos R18
+			CPI R18, 0															;Comparamos R18 con el valor 0
+			BREQ set_0															;Si lo anterior es igual saltamos a set_0
+			STS current_pos, R18												;Guardamos el valor de R18 en la variable current_pos
 
-			SER R17
-			OUT PORTB, R17
+			SER R17																;Ponemos a 255 R17
+			OUT PORTB, R17														;Sacamos el valor de R17 por el puerto B (encendido)
 
-			PUSH R18
-			CALL delay_0_01ms
-			POP R18
+			PUSH R18															;Guardamos el registro R18 en la pila
+			CALL delay_0_01ms													;Llamamos al delay de 0,01ms
+			POP R18																;Recuperamos el valor de la pila y lo guardamos en R18
 
-			CALL delay_0_5ms
+			CALL delay_0_5ms													;Llamamos al delay de 0,5ms
 
-			CLR R17
-			OUT PORTB, R17
-			CALL delay_19ms
+			CLR R17																;Ponemos el valor 0 a R17
+			OUT PORTB, R17														;Sacamos el valor de R17 por el puerto B (apagado)
+			CALL delay_19ms														;Llamamos al delay de 19ms
 
-			CLR R17
-			STS trigger, R17
+			CLR R17																;Ponemos a 0 R17
+			STS trigger, R17													;Guardamos R17 en la variable trigger
 
-			RJMP seguir
+			RJMP seguir															;Saltamos a seguir
 	
 		set_180:
-			LDS R18, current_pos
+			LDS R18, current_pos												;Cargamos el valor del la variable en R18
 
-			CPI R18, 180
-			BRNE seguir
+			CPI R18, 180														;Comparamos R18 con el valor 180
+			BRNE seguir															;Si lo anterior se cumple saltamos a seguir
 
-			LDI R18, 180
-			STS current_pos, R18
+			LDI R18, 180														;Guardamos en R18 el valor 180
+			STS current_pos, R18												;Guardamos el valor de R18 en la variable
 
-			RJMP seguir
+			RJMP seguir															;Saltamos a la etiqueta seguir
 
 		set_0:
-			LDS R18, current_pos
-			CPI R18, 0
-			BRNE seguir
+			LDS R18, current_pos												;Cargamos el valor del la variable en R18
+			
+			CPI R18, 0															;Comparamos R18 con el valor 180
+			BRNE seguir															;Saltamos a la etiqueta seguir
 
-			LDI R18, 0
-			STS current_pos, R18
+			LDI R18, 0															;Guardamos en R18 el valor 0
+			STS current_pos, R18												;Guardamos el valor de R18 en la variable
 
-			RJMP seguir
+			RJMP seguir															;Saltamos a la etiqueta seguir
 		
 		seguir:
 			RJMP loop															;Saltamos a la etiqueta loop
@@ -169,9 +170,9 @@ USART0_reception_completed:
 
 ***************************************************/
 delay_19ms:
-	PUSH R18											;Copia de seguridad del R18
-	PUSH R19											;Copia de seguridad del R19
-	PUSH R20											;Copia de seguridad del R20
+	PUSH R18																	;Copia de seguridad del R18
+	PUSH R19																	;Copia de seguridad del R19
+	PUSH R20																	;Copia de seguridad del R20
 
 	; Assembly code auto-generated
 	; by utility from Bret Mulvey
@@ -189,14 +190,14 @@ delay_19ms:
 		dec  r18
 		brne L1
 		
-	POP R20												;Reestablecemos el valor de R20
-	POP R19												;Reestablecemos el valor de R19
-	POP R18												;Reestablecemos el valor de R18
-	RET	
+	POP R20																		;Reestablecemos el valor de R20
+	POP R19																		;Reestablecemos el valor de R19
+	POP R18																		;Reestablecemos el valor de R18
+	RET																			;Devolvemos la funcion
 
 delay_0_5ms:
-	PUSH R18
-	PUSH R19
+	PUSH R18																	;Copia de seguridad del R18
+	PUSH R19																	;Copia de seguridad del R19
 
 	; Assembly code auto-generated
 	; by utility from Bret Mulvey
@@ -211,23 +212,23 @@ delay_0_5ms:
 		dec  r18
 		brne L2
 
-	POP R19
-	POP R18
+	POP R19																		;Reestablecemos el valor de R19
+	POP R18																		;Reestablecemos el valor de R18
 
-	RET
+	RET																			;Devolvemos la funcion																;
 
 delay_0_01ms:
 	
-	PUSH YH															;Copia de seguridad del registro YH
-	PUSH YL															;Copia de seguridad del registro YL
+	PUSH YH																		;Copia de seguridad del registro YH
+	PUSH YL																		;Copia de seguridad del registro YL
 	IN YL, SPL														
 	IN YH, SPH														
-	PUSH R0															;Copia de seguridad del registro R0
+	PUSH R0																		;Copia de seguridad del registro R0
 	
 
-	PUSH R18														;Copia de seguridad del registro 18													;Copia de seguridad del registro 22
+	PUSH R18																	;Copia de seguridad del registro 18
 	
-	LDD R0, Y + 5													;Guardamos en el R0 el valor que haya en la pila desde Y + 5
+	LDD R0, Y + 5																;Guardamos en el R0 el valor que haya en la pila desde Y + 5
 
 repeticiones:
 		; Assembly code auto-generated
@@ -241,19 +242,19 @@ repeticiones:
 			brne L3
 			nop
 	
-	DEC R0															;Decrementamos R0
-	BRNE repeticiones												;Si no es cero vamos a repeticiones
+	DEC R0																		;Decrementamos R0
+	BRNE repeticiones															;Si no es cero vamos a repeticiones
 
 	
-	POP R18															;Restauración del registro 20
-	POP R0															;Restauración del registro 0
-	POP YL															;Restauración del registro YL
-	POP YH															;Restauración del registro YH
-	RET																;RET es el equivalente al return, antes deberemos de haber guardado el PC (Program Counter)	
+	POP R18																		;Restauración del registro 20
+	POP R0																		;Restauración del registro 0
+	POP YL																		;Restauración del registro YL
+	POP YH																		;Restauración del registro YH
+	RET																			;RET es el equivalente al return, antes deberemos de haber guardado el PC (Program Counter)	
 
 delay_1_5ms:
-	PUSH R18
-	PUSH R19
+	PUSH R18																	;Copia de seguridad del R18
+	PUSH R19																	;Copia de seguridad del R19
 	; Assembly code auto-generated
 	; by utility from Bret Mulvey
 	; Delay 24 000 cycles
@@ -268,6 +269,6 @@ delay_1_5ms:
 		brne L4
 		nop
 
-	POP R19
-	POP R18
-	RET
+	POP R19																		;Recuperamos el valor de R19
+	POP R18																		;Recuperamos el valor de R18
+	RET																			;Devolvemos la funcion
